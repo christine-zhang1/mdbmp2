@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MovieListScreen from "./screens/MovieListScreen/MovieListScreen.main";
 import MovieDetailScreen from "./screens/MovieDetailScreen/MovieDetailScreen.main";
 import MovieFilterScreen from "./screens/MovieFilterScreen/MovieFilterScreen.main";
+import { Button } from "react-native-elements/dist/buttons/Button";
 
 /* TODO: 
 

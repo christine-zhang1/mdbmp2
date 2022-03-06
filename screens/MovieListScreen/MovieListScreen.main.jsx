@@ -21,7 +21,9 @@ export default function MovieListScreen({ navigation, route }) {
   };
 
   const selectedFilterButton = () => {
-    navigation.navigate('Search')
+    navigation.navigate('Search', {
+      a : actors
+    })
   };
 
   useEffect(
@@ -29,13 +31,18 @@ export default function MovieListScreen({ navigation, route }) {
       // TODO: Add a "Filter" button to the right bar button.
       // It should lead to the MovieFilterScreen, and pass the "actors" state
       // variable as a parameter.
-      <Button 
-        onPress={() => selectedFilterButton}
-        title="Filter"
-      />
-    },
+      navigation.setOptions({
+        headerRight: () => (
+          <Button
+            onPress={() => selectedFilterButton(actors)}
+            title="Filter"
+          />
+        ),
+    });
+  },
     [
       /* TODO: Insert dependencies here. */
+      navigation
     ]
   );
 
@@ -45,11 +52,14 @@ export default function MovieListScreen({ navigation, route }) {
           See https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
           for an example of how to send data BACKWARDS in the navigation stack.
       */
+     if (route.params?.ac) {
+       setActors(route.params.ac);
+     }
     },
     [
       /* TODO: Insert dependencies here. What variable changes 
         when we come back from the filter screen? */
-        search
+        route.params?.actors
     ]
   );
 
@@ -66,10 +76,13 @@ export default function MovieListScreen({ navigation, route }) {
     };
 
 
-
     // TODO: Set up search & filter criteria.
     let meetsSearchCriteria = true;
     let meetsActorsCriteria = true;
+
+    if (!item.title.includes(search)) {
+      meetsSearchCriteria = false;
+    }
 
     if (meetsSearchCriteria && meetsActorsCriteria) {
       // TODO: Return a MovieCell, wrapped by a TouchableOpacity so we can handle taps.
@@ -94,6 +107,18 @@ export default function MovieListScreen({ navigation, route }) {
       {/* TODO: Add a SearchBar: https://reactnativeelements.com/docs/searchbar/.
                 The third-party package should already be installed for you. */}
       {/* TODO: Add a FlatList: https://reactnative.dev/docs/flatlist */}
+      <SearchBar
+        containerStyle={{backgroundColor: '#ffffff', 
+          borderBottomColor:'transparent',
+          borderTopColor:'transparent'}}
+        round={true}
+        placeholder="Search"
+        inputContainerStyle={{backgroundColor: "#ecf0f1"}}
+        onChangeText={setSearch}
+        value={search}
+        showCancel={true}
+        inputStyle={{color: "black"}}
+      />
       <FlatList
         data={TABLE_DATA}
         renderItem={renderItem}
