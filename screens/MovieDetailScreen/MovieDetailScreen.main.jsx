@@ -12,7 +12,12 @@ export default function MovieDetailScreen({ route }) {
                 See the example on the spec for design inspiration.
                 Feel free to use the styles below. */}
         <Image
-          style={styles.container} // fix
+          style={{
+            resizeMode: "contain",
+            height: 200,
+            width: 100,
+            alignSelf: 'center'
+          }}
           source={{uri: movieItem.posterurl}}
         />       
         <Text style={styles.h1}>{movieItem.title}</Text>

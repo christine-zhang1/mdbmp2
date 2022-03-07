@@ -21,8 +21,8 @@ export default function MovieListScreen({ navigation, route }) {
   };
 
   const selectedFilterButton = () => {
-    navigation.navigate('Search', {
-      a : actors
+    navigation.navigate("Filter", {
+      actors: actors
     })
   };
 
@@ -52,14 +52,14 @@ export default function MovieListScreen({ navigation, route }) {
           See https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
           for an example of how to send data BACKWARDS in the navigation stack.
       */
-     if (route.params?.ac) {
-       setActors(route.params.ac);
+     if (route.params?.actors) {
+       setActors(route.params.actors);
      }
     },
     [
       /* TODO: Insert dependencies here. What variable changes 
         when we come back from the filter screen? */
-        route.params?.actors
+        route
     ]
   );
 
@@ -75,10 +75,13 @@ export default function MovieListScreen({ navigation, route }) {
       return foundActor;
     };
 
-
     // TODO: Set up search & filter criteria.
     let meetsSearchCriteria = true;
-    let meetsActorsCriteria = true;
+    let meetsActorsCriteria = overlapFound(actors, item.actors);
+    
+    if (actors.length == 0) {
+      meetsActorsCriteria = true;
+    }
 
     if (!item.title.includes(search)) {
       meetsSearchCriteria = false;

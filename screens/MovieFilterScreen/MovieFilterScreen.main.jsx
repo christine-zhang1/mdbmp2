@@ -5,8 +5,7 @@ import {
   View,
   TouchableOpacity,
   Text,
-  Button,
-  ActivityIndicatorBase,
+  Button
 } from "react-native";
 
 import { getAllActors } from "../../constants/Constants";
@@ -20,18 +19,16 @@ export default function MovieFilterScreen({ navigation, route }) {
   const [actors, setActors] = useState([]);
 
   // TODO: Destructure navigation params from props.
-  const { a } = route.params;
 
   useEffect(
     () => {
       // TODO: Receive actors passed by MovieListScreen here, and update
       // our local state using setActors.
-
-      setActors(a);
+      setActors(route.params.actors);
     },
     [
       /* TODO: Insert dependent variables here. */
-      navigation
+      route
     ]
   );
 
@@ -48,16 +45,16 @@ export default function MovieFilterScreen({ navigation, route }) {
         headerRight: () => (
           <Button
             onPress={() => navigation.navigate("All Movies", {
-              ac : actors
+              actors: actors
             })}
             title="Done"
           />
-        )
-      });
-    },
+          )
+        });
+      },
     [
       /* TODO: Insert dependent state variables here. */
-      navigation
+      actors
     ]
   );
 
